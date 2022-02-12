@@ -1,11 +1,11 @@
 import { toast } from "react-toastify";
-import { authAxios } from "../../utils/axiosWrapper";
-import {apiEndPoint} from "../../constants/endpoints";
+import { authAxios } from "../../../utils/axiosWrapper";
+import {apiEndPoint} from "../../../constants/endpoints";
 import {
   addSitesSuccess,
   getAllSitesSuccess,
   updateSitesSuccess,
-} from "../actions/sitesActions";
+} from "../action/sitesActions";
 
 export function getAllSites() {
   return (dispatch) => {

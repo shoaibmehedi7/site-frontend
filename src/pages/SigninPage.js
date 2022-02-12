@@ -8,9 +8,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 import FormInputText from "../components/common/FormInputText";
 import { useYupValidationResolver } from "../utils/yupResolver";
 import { useDispatch, useSelector } from "react-redux";
-import { signInApi } from "../store/apis/userApi";
 import { isLoggedIn } from "../utils/isLoggedIn";
 import { routes } from "../constants/routes";
+import { signInApi } from "../store/user/api/userApi";
 
 const useStyles = makeStyles((theme) => ({
   root: {

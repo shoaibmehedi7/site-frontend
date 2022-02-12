@@ -4,7 +4,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import { updateSite } from "../store/apis/sitesApi";
+import { updateSite } from "../store/site/api/sitesApi";
 import { useYupValidationResolver } from "../utils/yupResolver";
 import FormInputText from "./common/FormInputText";
 

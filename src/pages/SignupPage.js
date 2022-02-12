@@ -8,8 +8,8 @@ import { NavLink } from "react-router-dom";
 import FormInputText from "../components/common/FormInputText";
 import { useYupValidationResolver } from "../utils/yupResolver";
 import { useDispatch } from "react-redux";
-import { signupApi } from "../store/apis/userApi";
 import { routes } from "../constants/routes";
+import { signupApi } from "../store/user/api/userApi";
 
 const useStyles = makeStyles((theme) => ({
   root: {

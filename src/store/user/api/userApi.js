@@ -1,11 +1,12 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { asyncLocalStorage } from "../../utils/asyncLocalStorage";
-import { userSignin, userSignup } from "../actions/userActions";
-import {apiEndPoint,baseUrl} from "../../constants/endpoints";
+import { asyncLocalStorage } from "../../../utils/asyncLocalStorage";
+import {apiEndPoint,baseUrl} from "../../../constants/endpoints";
+import { userSigninError, userSigninRequest, userSigninSuccess, userSignout, userSignupError, userSignupRequest, userSignupSuccess } from "../action/userActions";
 
 export function signInApi(data) {
   return (dispatch) => {
+    userSigninRequest();
     axios
       .post(baseUrl + apiEndPoint.SIGNIN, data)
       .then((response) => {
@@ -16,11 +17,12 @@ export function signInApi(data) {
               return asyncLocalStorage.getItem("jwt");
             })
             .then((token) => {
-              dispatch(userSignin(response.data.data));
+              dispatch(userSigninSuccess(response.data.data));
             });
         }
       })
       .catch((error) => {
+        userSigninError(error.message);
         toast.error(error.message);
       });
   };
@@ -28,14 +30,24 @@ export function signInApi(data) {
 
 export function signupApi(data) {
   return (dispatch) => {
+    dispatch(userSignupRequest())
     axios
       .post(baseUrl + apiEndPoint.SIGNUP, data)
       .then((response) => {
-        dispatch(userSignup(response.data.data));
+        dispatch(userSignupSuccess(response.data.data));
         toast.success("Successfully registered");
       })
       .catch((error) => {
+        dispatch(userSignupError(error.message))
         toast.error(error.message);
       });
+  };
+}
+
+export function signoutApi() {
+  return (dispatch) => {
+    localStorage.clear();
+    window.location.reload();
+    dispatch(userSignout())
   };
 }

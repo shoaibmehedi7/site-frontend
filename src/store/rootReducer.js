@@ -1,18 +1,23 @@
 import { combineReducers } from "redux";
-import { signInReducer } from "./reducers/signInReducer";
-import { signUpReducer } from "./reducers/signupReducer";
-import {
-  createSitesReducer,
-  sitesReducer,
-  updateSitesReducer,
-} from "./reducers/sitesReducer";
+import { createSitesReducer, sitesReducer, updateSitesReducer } from "./site/reducer/sitesReducer";
+import { USER_LOGOUT } from "./user/action/userActionsType";
+import { signInReducer } from './user/reducer/signInReducer'
+import {signUpReducer} from './user/reducer/signupReducer'
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   sites: sitesReducer,
   createSites: createSitesReducer,
   updateSites: updateSitesReducer,
   signin: signInReducer,
   signup: signUpReducer,
-});
+})
+
+const rootReducer = (state, action) => {
+  if (action.type === USER_LOGOUT) {
+    return appReducer(undefined, action)
+  }
+  return appReducer(state, action)
+}
+
 
 export default rootReducer;

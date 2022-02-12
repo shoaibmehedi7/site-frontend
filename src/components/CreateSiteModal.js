@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Grid } from "@mui/material";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import { createSites } from "../store/apis/sitesApi";
+import { createSites } from "../store/site/api/sitesApi";
 import FormInputText from "./common/FormInputText";
 import { useYupValidationResolver } from "../utils/yupResolver";
 

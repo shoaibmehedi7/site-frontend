@@ -1,12 +1,10 @@
 import {
   Box,
-  Button,
   Divider,
   Modal,
   TableBody,
   TableCell,
   TableRow,
-  TextField,
   Typography,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
@@ -17,8 +15,9 @@ import ButtonCustom from "../components/common/ButtonCustom";
 import CreateSiteModal from "../components/CreateSiteModal";
 import EditSiteModal from "../components/EditSiteModal";
 import SitesTable from "../components/SitesTable";
-import { getAllSites } from "../store/apis/sitesApi";
-import { isLoggedIn } from "../utils/isLoggedIn";
+import { getAllSites } from "../store/site/api/sitesApi";
+import { signoutApi } from "../store/user/api/userApi";
+import { getNameFromJWT, isLoggedIn } from "../utils/isLoggedIn";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,7 +75,7 @@ function UserSitesPage() {
     recordsAfterPagingAndSorting,
   } = SitesTable(tableData, headCells, filterFn);
 
-  const userData = useSelector((state) => state.signin.data);
+
 
   const isLogged = isLoggedIn();
 
@@ -99,15 +98,9 @@ function UserSitesPage() {
           </Typography>
           <Box style={{ display: "flex", alignItems: "center" }}>
             <Typography style={{ fontWeight: "bold", marginRight: "8px" }}>
-              {userData.name}
+              {getNameFromJWT()}
             </Typography>
-            <ButtonCustom
-              title="Logout"
-              onClick={() => {
-                localStorage.clear();
-                window.location.reload();
-              }}
-            />
+            <ButtonCustom title="Logout" onClick={() => {dispatch(signoutApi())}} />
           </Box>
         </Box>
         <Divider style={{ margin: "10px 0" }}></Divider>
