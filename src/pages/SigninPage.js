@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import FormInputText from "../components/common/FormInputText";
-import { apiEndPoint, baseUrl } from "../utils/routes";
+import { apiEndPoint, baseUrl } from "../utils/endpoints";
 import { useYupValidationResolver } from "../utils/yupResolver";
 import { useDispatch, useSelector } from "react-redux";
 import { signInApi } from "../store/apis/userApi";
@@ -15,7 +15,6 @@ import { isLoggedIn } from "../utils/isLoggedIn";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // width: "100%",
     height: "100vh",
     padding: "20px",
     display: "flex",
@@ -43,7 +42,7 @@ const validationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Must be a valid email")
     .required("Email is required"),
-  password: Yup.string().min(6).required("Password is required"),
+  password: Yup.string().min(6).max(12).required("Password is required"),
 });
 
 function SigninPage() {

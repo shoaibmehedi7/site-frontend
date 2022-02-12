@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getToken } from "./isLoggedIn";
-import { baseUrl } from "./routes";
+import { baseUrl } from "./endpoints";
 
 export const authAxios = axios.create({
   baseURL: baseUrl,

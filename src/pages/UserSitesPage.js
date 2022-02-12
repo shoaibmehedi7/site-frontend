@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
     padding: "60px 80px",
-    // width: "80vw",
     display: "flex",
     justifyContent: "center",
   },
@@ -40,7 +39,6 @@ const style = {
   maxWidth: "700px",
   overflowY: "auto",
   bgcolor: "background.paper",
-  //   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
@@ -61,7 +59,6 @@ function UserSitesPage() {
   const [openNew, setOpenNew] = useState(false);
   const dispatch = useDispatch();
 
-  // const [tableData, setTableData] = useState([]);
   const [filterFn, setFilterFn] = useState({
     fn: (items) => {
       return items;

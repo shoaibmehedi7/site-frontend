@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { asyncLocalStorage } from "../../utils/asyncLocalStorage";
-import { apiEndPoint, baseUrl } from "../../utils/routes";
+import { apiEndPoint, baseUrl } from "../../utils/endpoints";
 import { userSignin, userSignup } from "../actions/userActions";
 
 export function signInApi(data) {

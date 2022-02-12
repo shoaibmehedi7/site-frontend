@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { authAxios } from "../../utils/axiosWrapper";
-import { apiEndPoint } from "../../utils/routes";
+import { apiEndPoint } from "../../utils/endpoints";
 import {
   addSitesSuccess,
   getAllSitesSuccess,
