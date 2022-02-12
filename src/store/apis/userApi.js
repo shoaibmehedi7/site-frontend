@@ -1,8 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { asyncLocalStorage } from "../../utils/asyncLocalStorage";
-import { apiEndPoint, baseUrl } from "../../utils/endpoints";
 import { userSignin, userSignup } from "../actions/userActions";
+import {apiEndPoint,baseUrl} from "../../constants/endpoints";
 
 export function signInApi(data) {
   return (dispatch) => {

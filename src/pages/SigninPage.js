@@ -7,11 +7,11 @@ import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import FormInputText from "../components/common/FormInputText";
-import { apiEndPoint, baseUrl } from "../utils/endpoints";
 import { useYupValidationResolver } from "../utils/yupResolver";
 import { useDispatch, useSelector } from "react-redux";
 import { signInApi } from "../store/apis/userApi";
 import { isLoggedIn } from "../utils/isLoggedIn";
+import { routes } from "../constants/routes";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,7 +67,7 @@ function SigninPage() {
 
   useEffect(() => {
     if (isLogged) {
-      navigate("/");
+      navigate(routes.ROOT);
     }
   }, [isLogged, userData]);
 
@@ -98,7 +98,7 @@ function SigninPage() {
             <Grid item md={12}>
               <Box className={classes.info}>
                 <Typography>Don't have an account</Typography>
-                <NavLink style={{ textDecoration: "none" }} to={"/signup"}>
+                <NavLink style={{ textDecoration: "none" }} to={routes.SIGNUP}>
                   Sign up
                 </NavLink>
               </Box>

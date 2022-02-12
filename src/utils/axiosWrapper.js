@@ -1,7 +1,6 @@
 import axios from "axios";
 import { getToken } from "./isLoggedIn";
-import { baseUrl } from "./endpoints";
-
+import { baseUrl } from "../constants/endpoints";
 export const authAxios = axios.create({
   baseURL: baseUrl,
   headers: {

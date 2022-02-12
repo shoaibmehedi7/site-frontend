@@ -8,10 +8,10 @@ import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import FormInputText from "../components/common/FormInputText";
-import { apiEndPoint, baseUrl } from "../utils/endpoints";
 import { useYupValidationResolver } from "../utils/yupResolver";
 import { useDispatch } from "react-redux";
 import { signupApi } from "../store/apis/userApi";
+import { routes } from "../constants/routes";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -126,7 +126,7 @@ function SignupPage() {
             <Grid item md={12}>
               <Box className={classes.info}>
                 <Typography>Already have an account?</Typography>
-                <NavLink style={{ textDecoration: "none" }} to="/signin">
+                <NavLink style={{ textDecoration: "none" }} to={routes.SIGNIN}>
                   Sign in
                 </NavLink>
               </Box>

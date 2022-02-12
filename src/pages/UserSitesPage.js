@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "60px 80px",
     display: "flex",
     justifyContent: "center",
-  },
+  }
 }));
 
 const style = {
@@ -69,21 +69,6 @@ function UserSitesPage() {
   const newSite = useSelector((state) => state.createSites.data);
   const updateSite = useSelector((state) => state.updateSites.data);
 
-  const handleOpen = (id) => {
-    setOpen(id);
-  };
-
-  const handleOpenNew = () => {
-    setOpenNew(true);
-  };
-
-  const handleClose = () => {
-    setOpen(null);
-  };
-
-  const handleCloseNew = () => {
-    setOpenNew(false);
-  };
 
   const {
     TableContainer,
@@ -157,13 +142,13 @@ function UserSitesPage() {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={handleOpenNew}
+                onClick={() => setOpenNew(true)}
               >
                 Add New
               </Button>
               <Modal
                 open={openNew}
-                onClose={handleCloseNew}
+                onClose={() => setOpenNew(false)}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
               >
@@ -197,14 +182,14 @@ function UserSitesPage() {
                       <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => handleOpen(item.id)}
+                        onClick={() => setOpen(item.id)}
                       >
                         Edit
                       </Button>
                       <Modal
                         key={item.id}
                         open={open === item.id}
-                        onClose={handleClose}
+                        onClose={() => setOpen(false)}
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                       >

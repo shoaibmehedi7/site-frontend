@@ -6,17 +6,18 @@ import UserSitesPage from "./pages/UserSitesPage";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./components/privateRoute";
+import { routes } from "./constants/routes";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route
-          path="/"
+          path={routes.ROOT}
           element={<ProtectedRoute Component={UserSitesPage} />}
         />
-        <Route path={"/signin"} element={<SigninPage />} />
-        <Route path={"/signup"} element={<SignupPage />} />
+        <Route path={routes.SIGNIN} element={<SigninPage />} />
+        <Route path={routes.SIGNUP} element={<SignupPage />} />
       </Routes>
       <ToastContainer />
     </Router>
