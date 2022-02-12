@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function useTables(records, headCells, filterFn) {
+function SitesTable(records, headCells, filterFn) {
   const classes = useStyles();
 
   const pages = [10, 25, 50, 100];
@@ -39,7 +39,7 @@ function useTables(records, headCells, filterFn) {
 
   const TblHead = (props) => {
     const handleSortRequest = (cellId) => {
-      const isAsc = (orderBy === cellId) & (order === "asc");
+      const isAsc = (orderBy === cellId);
       setOrder(isAsc ? "desc" : "asc");
       setOrderBy(cellId);
     };
@@ -130,4 +130,4 @@ function useTables(records, headCells, filterFn) {
   };
 }
 
-export default useTables;
+export default SitesTable;

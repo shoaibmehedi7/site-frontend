@@ -13,9 +13,9 @@ import { makeStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import CreateModal from "../components/CreateModal";
-import EditModal from "../components/editModal";
-import useTables from "../components/useTables";
+import CreateSiteModal from "../components/CreateSiteModal";
+import EditSiteModal from "../components/EditSiteModal";
+import SitesTable from "../components/SitesTable";
 import { getAllSites } from "../store/apis/sitesApi";
 import { isLoggedIn } from "../utils/isLoggedIn";
 
@@ -44,7 +44,6 @@ const style = {
 };
 
 const headCells = [
-  { id: "sl", label: "SL" },
   { id: "name", label: "Name" },
   { id: "description", label: "Description" },
   { id: "region", label: "Region" },
@@ -69,13 +68,12 @@ function UserSitesPage() {
   const newSite = useSelector((state) => state.createSites.data);
   const updateSite = useSelector((state) => state.updateSites.data);
 
-
   const {
     TableContainer,
     TblHead,
     TblPagination,
     recordsAfterPagingAndSorting,
-  } = useTables(tableData, headCells, filterFn);
+  } = SitesTable(tableData, headCells, filterFn);
 
   const userData = useSelector((state) => state.signin.data);
 
@@ -84,22 +82,6 @@ function UserSitesPage() {
   useEffect(() => {
     dispatch(getAllSites());
   }, [newSite, updateSite, isLogged]);
-
-  const handleSearch = (e) => {
-    let target = e.target;
-
-    setFilterFn({
-      fn: (items) => {
-        if (target.value === "") {
-          return items;
-        } else {
-          return items.filter((x) =>
-            x.name.toLowerCase().includes(target.value.trim().toLowerCase())
-          );
-        }
-      },
-    });
-  };
 
   return (
     <Box className={classes.root}>
@@ -131,13 +113,6 @@ function UserSitesPage() {
         <Divider style={{ margin: "10px 0" }}></Divider>
         <Box>
           <Box style={{ display: "flex", justifyContent: "space-between" }}>
-            <TextField
-              style={{ width: "300px" }}
-              label="Search Table"
-              size="small"
-              name="search"
-              onChange={handleSearch}
-            />
             <>
               <Button
                 variant="contained"
@@ -161,7 +136,7 @@ function UserSitesPage() {
                     Add New
                   </Typography>
 
-                  <CreateModal setOpenNew={setOpenNew} />
+                  <CreateSiteModal setOpenNew={setOpenNew} />
                 </Box>
               </Modal>
             </>
@@ -171,7 +146,6 @@ function UserSitesPage() {
             <TableBody>
               {recordsAfterPagingAndSorting().map((item, index) => (
                 <TableRow key={item.id}>
-                  <TableCell>{index + 1}</TableCell>
                   <TableCell>{item.name}</TableCell>
                   <TableCell>{item.description}</TableCell>
                   <TableCell>{item.region}</TableCell>
@@ -196,7 +170,7 @@ function UserSitesPage() {
                         <Box sx={style}>
                           <Typography>Edit Modal</Typography>
 
-                          <EditModal item={item} setOpen={setOpen} />
+                          <EditSiteModal item={item} setOpen={setOpen} />
                         </Box>
                       </Modal>
                     </Box>

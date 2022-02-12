@@ -1,7 +1,6 @@
-import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Button, Grid, Paper, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/system";
-import axios from "axios";
 import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
@@ -54,11 +53,7 @@ function SigninPage() {
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const isLogged = isLoggedIn();
-
-  console.log(isLogged);
-
   const userData = useSelector((state) => state.signin.data);
 
   const onSubmit = (data) => {

@@ -1,12 +1,11 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { routes } from "../constants/routes";
-import { isLoggedIn } from "../utils/isLoggedIn";
+import { isLoggedIn } from "./isLoggedIn";
 
 function ProtectedRoute({ Component }) {
   const location = useLocation();
 
-  console.log(location);
   if (isLoggedIn()) {
     return <Component />;
   }

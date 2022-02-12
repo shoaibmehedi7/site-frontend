@@ -1,12 +1,20 @@
-import { Button, Divider, Grid, ListItem, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import React from "react";
+import * as React from "react";
+import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
+import { Grid } from "@mui/material";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import { updateSite } from "../store/apis/sitesApi";
-import { useYupValidationResolver } from "../utils/yupResolver";
+import { createSites } from "../store/apis/sitesApi";
 import FormInputText from "./common/FormInputText";
+import { useYupValidationResolver } from "../utils/yupResolver";
+
+const defaultValues = {
+  name: "",
+  description: "",
+  region: "",
+  lat: "",
+  lng: "",
+};
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -20,25 +28,17 @@ const validationSchema = Yup.object().shape({
     .required("Longitude is required"),
 });
 
-function EditModal({ item, setOpen }) {
-  console.log(item);
+export default function CreateSiteModal({ setOpenNew }) {
   const resolver = useYupValidationResolver(validationSchema);
   const { handleSubmit, control } = useForm({
-    defaultValues: {
-      name: item.name,
-      description: item.description,
-      region: item.region,
-      lat: item.lat,
-      lng: item.lng,
-    },
+    defaultValues: defaultValues,
     resolver: resolver,
   });
   const dispatch = useDispatch();
 
   const onSubmit = (data) => {
-    dispatch(updateSite({ ...data, id: item.id }, setOpen));
+    dispatch(createSites(data, setOpenNew));
   };
-
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -64,32 +64,11 @@ function EditModal({ item, setOpen }) {
           </Grid>
           <Grid item md={12}>
             <Button type="submit" color="primary" variant="contained" fullWidth>
-              Save Changes
+              Save
             </Button>
           </Grid>
         </Grid>
       </form>
-      <Box style={{ margin: "20px" }}>
-        <Typography
-          variant="h5"
-          color={"primary"}
-          style={{ marginTop: "20px" }}
-        >
-          Audit Log History
-        </Typography>
-        <Divider style={{ marginBottom: "20px" }} />
-        {item && item.changes && item.changes.length > 0
-          ? item.changes.map((chng) => {
-              return (
-                <ListItem key={chng.id}>
-                  {chng.description} on {item.updatedDate.toString()}
-                </ListItem>
-              );
-            })
-          : ""}
-      </Box>
     </div>
   );
 }
-
-export default EditModal;

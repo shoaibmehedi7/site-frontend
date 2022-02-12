@@ -25,7 +25,6 @@ export function createSites(data, setOpenNew) {
     authAxios
       .post(apiEndPoint.CREATE_SITE, data)
       .then((response) => {
-        console.log(response.data);
         dispatch(addSitesSuccess(response.data.data));
         toast.success("Successfully added");
         setOpenNew(false);
@@ -41,10 +40,9 @@ export function updateSite(data, setOpen) {
     authAxios
       .post(apiEndPoint.UPDATE_SITE, data)
       .then((response) => {
-        console.log(response.data.data);
         toast.success("Updated successfully");
         dispatch(updateSitesSuccess(response.data.data));
-        setOpen(null);
+        setOpen(false);
       })
       .catch((error) => {
         toast.error(error.message);

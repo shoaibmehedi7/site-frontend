@@ -1,20 +1,12 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
+import { Button, Divider, Grid, ListItem, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { Grid } from "@mui/material";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import { createSites } from "../store/apis/sitesApi";
-import FormInputText from "./common/FormInputText";
+import { updateSite } from "../store/apis/sitesApi";
 import { useYupValidationResolver } from "../utils/yupResolver";
-
-const defaultValues = {
-  name: "",
-  description: "",
-  region: "",
-  lat: "",
-  lng: "",
-};
+import FormInputText from "./common/FormInputText";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -27,18 +19,37 @@ const validationSchema = Yup.object().shape({
     .typeError("Must be a number")
     .required("Longitude is required"),
 });
-
-export default function CreateModal({ setOpenNew }) {
+function isAuditLogPresentable(item) {
+  console.log(item);
+  return item && item.changes && item.changes.length > 0
+}
+function AuditLog({item}){
+  return item.changes.map((chng) => {
+    return (
+      <ListItem key={chng.id}>
+        {chng.description} on {item.updatedDate.toString()}
+      </ListItem>
+    );
+  })
+}
+function EditSiteModal({ item, setOpen }) {
   const resolver = useYupValidationResolver(validationSchema);
   const { handleSubmit, control } = useForm({
-    defaultValues: defaultValues,
+    defaultValues: {
+      name: item.name,
+      description: item.description,
+      region: item.region,
+      lat: item.lat,
+      lng: item.lng,
+    },
     resolver: resolver,
   });
   const dispatch = useDispatch();
 
   const onSubmit = (data) => {
-    dispatch(createSites(data, setOpenNew));
+    dispatch(updateSite({ ...data, id: item.id }, setOpen));
   };
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -64,11 +75,24 @@ export default function CreateModal({ setOpenNew }) {
           </Grid>
           <Grid item md={12}>
             <Button type="submit" color="primary" variant="contained" fullWidth>
-              Save
+              Save Changes
             </Button>
           </Grid>
         </Grid>
       </form>
+      <Box style={{ margin: "20px" }}>
+        <Typography
+          variant="h5"
+          color={"primary"}
+          style={{ marginTop: "20px" }}
+        >
+          Audit Log History
+        </Typography>
+        <Divider style={{ marginBottom: "20px" }} />
+        {isAuditLogPresentable(item) && <AuditLog item={item}/>}
+      </Box>
     </div>
   );
 }
+
+export default EditSiteModal;
