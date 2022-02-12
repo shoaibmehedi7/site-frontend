@@ -1,6 +1,5 @@
 export function isLoggedIn() {
-  const token = localStorage.getItem("jwt");
-
+  const token = getToken();
   if (token) {
     return true;
   } else {

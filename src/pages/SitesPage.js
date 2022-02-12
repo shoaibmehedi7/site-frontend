@@ -13,6 +13,7 @@ import { makeStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import ButtonCustom from "../components/common/ButtonCustom";
 import CreateSiteModal from "../components/CreateSiteModal";
 import EditSiteModal from "../components/EditSiteModal";
 import SitesTable from "../components/SitesTable";
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "60px 80px",
     display: "flex",
     justifyContent: "center",
-  }
+  },
 }));
 
 const style = {
@@ -100,27 +101,23 @@ function UserSitesPage() {
             <Typography style={{ fontWeight: "bold", marginRight: "8px" }}>
               {userData.name}
             </Typography>
-            <Button
+            <ButtonCustom
+              title="Logout"
               onClick={() => {
                 localStorage.clear();
                 window.location.reload();
               }}
-            >
-              Logout
-            </Button>
+            />
           </Box>
         </Box>
         <Divider style={{ margin: "10px 0" }}></Divider>
         <Box>
           <Box style={{ display: "flex", justifyContent: "space-between" }}>
             <>
-              <Button
-                variant="contained"
-                color="primary"
+              <ButtonCustom
+                title="Add New Site"
                 onClick={() => setOpenNew(true)}
-              >
-                Add New
-              </Button>
+              />
               <Modal
                 open={openNew}
                 onClose={() => setOpenNew(false)}
@@ -135,7 +132,6 @@ function UserSitesPage() {
                   >
                     Add New
                   </Typography>
-
                   <CreateSiteModal setOpenNew={setOpenNew} />
                 </Box>
               </Modal>
@@ -153,13 +149,10 @@ function UserSitesPage() {
                   <TableCell>{item.lng}</TableCell>
                   <TableCell>
                     <Box>
-                      <Button
-                        variant="contained"
-                        color="primary"
+                      <ButtonCustom
+                        title="Edit"
                         onClick={() => setOpen(item.id)}
-                      >
-                        Edit
-                      </Button>
+                      />
                       <Modal
                         key={item.id}
                         open={open === item.id}
