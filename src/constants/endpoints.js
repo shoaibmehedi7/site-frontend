@@ -1,5 +1,5 @@
-export const baseUrl = "http://localhost:3200/api/v1/";
-// export const baseUrl = "http://3.23.96.38:3200/api/v1/";
+// export const baseUrl = "http://localhost:3200/api/v1/";
+export const baseUrl = "http://3.23.96.38:3200/api/v1/";
 
 export const apiEndPoint = {
   SIGNIN: "user/signIn",
