@@ -16,7 +16,7 @@ export function getHistoryBySiteId(req) {
         dispatch(getHistoriesSuccess(response.data.data));
       })
       .catch((error) => {
-        getHistoriesError(error.message);
+        dispatch(getHistoriesError(error.message));
         toast.error(error.message);
       });
   };

@@ -14,7 +14,7 @@ import {
 
 export function signInApi(data) {
   return (dispatch) => {
-    userSigninRequest();
+    dispatch(userSigninRequest());
     axios
       .post(baseUrl + apiEndPoint.SIGNIN, data)
       .then((response) => {
@@ -30,7 +30,7 @@ export function signInApi(data) {
         }
       })
       .catch((error) => {
-        userSigninError(error.message);
+        dispatch(userSigninError(error.message));
         toast.error(error.message);
       });
   };
