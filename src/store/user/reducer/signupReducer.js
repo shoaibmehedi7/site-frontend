@@ -1,7 +1,7 @@
 import { SIGNUP_ERROR, SIGNUP_REQUEST, SIGNUP_SUCCESS } from "../action/userActionsType";
 const initState = {
   loading: false,
-  data: "",
+  data: [],
   error: "",
 };
 export function signUpReducer(state = initState, action) {

@@ -1,15 +1,16 @@
 import { Button, Grid, Paper, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import FormInputText from "../components/common/FormInputText";
 import { useYupValidationResolver } from "../utils/yupResolver";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { routes } from "../constants/routes";
 import { signupApi } from "../store/user/api/userApi";
+import { isLoggedIn } from "../utils/isLoggedIn";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,6 +63,8 @@ function SignupPage() {
     resolver: resolver,
   });
   const classes = useStyles();
+  const navigate = useNavigate();
+  const isLogged = isLoggedIn();
 
   const dispatch = useDispatch();
 
@@ -70,6 +73,14 @@ function SignupPage() {
       dispatch(signupApi(data));
     }
   };
+
+  const userData = useSelector((state) => state.signup.data);
+
+  useEffect(() => {
+    if (isLogged) {
+      navigate(routes.ROOT);
+    }
+  }, [isLogged, userData]);
   return (
     <Box className={classes.root}>
       <form onSubmit={handleSubmit(onSubmit)}>

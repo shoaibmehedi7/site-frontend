@@ -1,7 +1,7 @@
 import { SIGNIN_ERROR, SIGNIN_REQUEST, SIGNIN_SUCCESS } from "../action/userActionsType";
 const initState = {
   loading: false,
-  data: "",
+  data: [],
   error: "",
 };
 export function signInReducer(state = initState, action) {

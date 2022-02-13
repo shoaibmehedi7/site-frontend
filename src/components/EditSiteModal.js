@@ -21,14 +21,13 @@ const validationSchema = Yup.object().shape({
     .required("Longitude is required"),
 });
 function isAuditLogPresentable(item) {
-  console.log(item);
-  return item && item.changes && item.changes.length > 0
+  return item && item.length
 }
 function AuditLog({item}){
-  return item.changes.map((chng) => {
+  return item.map((history) => {
     return (
-      <ListItem key={chng.id}>
-        {chng.description} on {item.updatedDate.toString()}
+      <ListItem key={history.id}>
+        {history.description} on {new Date(history.updatedDate).toLocaleString()}
       </ListItem>
     );
   })
