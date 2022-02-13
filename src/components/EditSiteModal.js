@@ -1,9 +1,10 @@
 import { Button, Divider, Grid, ListItem, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
+import { getHistoryBySiteId } from "../store/history/api/historyApi";
 import { updateSite } from "../store/site/api/sitesApi";
 import { useYupValidationResolver } from "../utils/yupResolver";
 import FormInputText from "./common/FormInputText";
@@ -45,6 +46,10 @@ function EditSiteModal({ item, setOpen }) {
     resolver: resolver,
   });
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getHistoryBySiteId({ id: item.id }));
+  },[]);
+  const histories = useSelector((state) => state.history.data);
 
   const onSubmit = (data) => {
     dispatch(updateSite({ ...data, id: item.id }, setOpen));
@@ -89,7 +94,7 @@ function EditSiteModal({ item, setOpen }) {
           Audit Log History
         </Typography>
         <Divider style={{ marginBottom: "20px" }} />
-        {isAuditLogPresentable(item) && <AuditLog item={item}/>}
+        { isAuditLogPresentable(histories) && <AuditLog item={histories}/>}
       </Box>
     </div>
   );

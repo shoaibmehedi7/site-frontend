@@ -3,9 +3,11 @@ import { createSitesReducer, sitesReducer, updateSitesReducer } from "./site/red
 import { USER_LOGOUT } from "./user/action/userActionsType";
 import { signInReducer } from './user/reducer/signInReducer'
 import {signUpReducer} from './user/reducer/signupReducer'
+import {historyReducer} from './history/reducer/historyReducer'
 
 const appReducer = combineReducers({
   sites: sitesReducer,
+  history:historyReducer,
   createSites: createSitesReducer,
   updateSites: updateSitesReducer,
   signin: signInReducer,
