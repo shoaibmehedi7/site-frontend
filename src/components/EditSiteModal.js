@@ -21,16 +21,17 @@ const validationSchema = Yup.object().shape({
     .required("Longitude is required"),
 });
 function isAuditLogPresentable(item) {
-  return item && item.length
+  return item && item.length;
 }
-function AuditLog({item}){
+function AuditLog({ item }) {
   return item.map((history) => {
     return (
       <ListItem key={history.id}>
-        {history.description} on {new Date(history.updatedDate).toLocaleString()}
+        {history.description} on{" "}
+        {new Date(history.updatedDate).toLocaleString()}
       </ListItem>
     );
-  })
+  });
 }
 function EditSiteModal({ item, setOpen }) {
   const resolver = useYupValidationResolver(validationSchema);
@@ -47,7 +48,7 @@ function EditSiteModal({ item, setOpen }) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getHistoryBySiteId({ id: item.id }));
-  },[]);
+  }, []);
   const histories = useSelector((state) => state.history.data);
 
   const onSubmit = (data) => {
@@ -90,10 +91,10 @@ function EditSiteModal({ item, setOpen }) {
           color={"primary"}
           style={{ marginTop: "20px" }}
         >
-          Audit Log History
+          Audit Log
         </Typography>
         <Divider style={{ marginBottom: "20px" }} />
-        { isAuditLogPresentable(histories) && <AuditLog item={histories}/>}
+        {isAuditLogPresentable(histories) && <AuditLog item={histories} />}
       </Box>
     </div>
   );
