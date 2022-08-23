@@ -1,50 +1,107 @@
-# Getting Started with Create React App
+<p align="center">
+  <a href="https://www.milkyway.games/" target="blank"><img src="https://z2p3v6v9.rocketcdn.me/wp-content/uploads/2021/05/logoSeul-1.png" width="100" alt="CME Logo" /></a>
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center">
+  Backend code for the <a href="https://www.milkyway.games/" target="blank">Crypto Monkey Empire</a> game.
+</p>
 
-## Available Scripts
+## Table of content
 
-In the project directory, you can run:
+* [Description](#description)
+* [Requirements](#requirements)
+* [Infra](#infra)
+ * [Init](#init)
+ * [Run](#run)
+* [Architecture / code](#init)
+ * [Concept](#description)
+ * Redis (TODO)
+ * DB (TODO)
+* [How to: push new code](#description)
+* Testing (TODO)
 
-### `yarn`
+## Description
 
-install all the dependencies.
+This project is developped using:
+* Javascript / Typescript (https://www.typescriptlang.org/docs/)
+* Nodejs
+* Nest (https://docs.nestjs.com/)
+* Docker
 
-### `yarn start`
+## Requirements
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To be able to run this project and code for it, you'll have to have installed:
+* Node js / npm. The Docker container currently uses version 14, but it might evolve. I recommend using nvm (https://github.com/nvm-sh/nvm )
+* An up-to-date docker system: the easiest way is to use Docker Desktop (https://www.docker.com/products/docker-desktop)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Infra
 
-### `yarn test`
+This project's Infrastructure relys on Docker. Once you have it working, you only need to follow the Init step once, then the Run step when you want to run the project.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Note: for windows user, it will be necessary to run Docker desktop manually first (our bash scripts only support launchctl and systemctl)
 
-### `yarn build`
+### Init
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Go to the project's root and run:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```$> ./init.sh```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This will help identify the container to docker without having to push it online in the Docker base.
 
-### `yarn eject`
+### Run
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Go to the project's root and run:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```$> ./boot.sh```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+This will launch every service needed to run the project.
+After that, you can see it running directly in Docker Desktop.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Architecture
 
-## Learn More
+Nest js allows us to deploy a multi services architecture pretty easily (just a bit different than microservices, but the use is mainly similar).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The database uses Postgres.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Concept
+
+The cme-backend service is the main service, used as the Http Layer to communicate with the frontend apps.
+It communicates with the Battles manager, the Units producer and the Units production scheduler using Redis events.
+
+All the services have access to the DB
+
+```
+ _________________   ________________   ____________________________
+|                 | |                | |                            |
+| battles-manager | | units-producer | | units-production-scheduler |
+|_________________| |________________| |____________________________|      _____________________
+                                                                          |                     |
+         |                 |                       |               |--->  |    DB (postgres)    |
+ ____________________________________________________________________     |_____________________|
+|                                                                    |
+|                      cme-backend / http layer                      |
+|____________________________________________________________________|
+
+                               |
+ ____________________________________________________________________
+|                                                                    |
+|                  front apps (iOs/Android/desktop)                  |
+|____________________________________________________________________|
+```
+
+
+
+## How to: push new code
+
+To keep track of our changes and insure a minimum code quality, we try to do pull requests instead of just pushing to the main branch.
+
+To do that:
+* Everytime you want to start coding a new feature, create a branch for this one
+* Once you're done, propose a PR from this branch to the main branch
+* Assign at least Florian and/or Simon, and don't hesitate to ping them on Discord so they know you just pushed a PR.
+* A review will be done, some changes might be required before approval
+* Once you have approval, you can merge it to the main branch (don't forget to rebase if you see any issue blocking the merge)
+
+## How to: launch the project in the proper environement
+* If it is a new project, use deploy.sh script to init the script, use "dev" "prod" argument to provide env. Default is dev
+* If not, use down.sh without arg, init.sh [env], boot.sh [env]
